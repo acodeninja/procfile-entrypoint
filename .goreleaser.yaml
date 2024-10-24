@@ -1,6 +1,8 @@
 version: 2
 archives:
-  - format: binary
+  - id: default
+    name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
+    format: binary
 builds:
   - id: procfile-entrypoint
     goos:
