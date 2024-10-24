@@ -1,0 +1,32 @@
+name: 📦 publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: 🧪 test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.2
+      - run: go test -cover
+
+  publish:
+    name: 📦 publish
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: go-semantic-release/action@v1
+        with:
+          hooks: goreleaser
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

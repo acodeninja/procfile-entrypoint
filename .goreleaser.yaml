@@ -1,0 +1,11 @@
+version: 2
+archives:
+  - format: binary
+builds:
+  - id: procfile-entrypoint
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
