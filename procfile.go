@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"log"
 	"os"
 	"strings"
 )
@@ -54,13 +53,6 @@ func openFile(filename string) (*bufio.Reader, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}(file)
 
 	return bufio.NewReader(file), nil
 }
