@@ -37,6 +37,22 @@ func TestRunningASingleCommandWithArguments(t *testing.T) {
 	}
 }
 
+func TestRunningASingleCommandWithOSEnvironment(t *testing.T) {
+	stdOut := &bytes.Buffer{}
+	stdErr := &bytes.Buffer{}
+	t.Setenv("TEST_ENV_VAR", "TEST_VALUE")
+
+	err := runCommand("echo $TEST_ENV_VAR", stdOut, stdErr)
+
+	if err != nil {
+		t.Errorf("Unexpected error: %s", err)
+	}
+
+	if !strings.Contains(stdOut.String(), "TEST_VALUE") {
+		t.Errorf("Unexpected output: %s", stdOut.String())
+	}
+}
+
 func TestRunningMultipleCommands(t *testing.T) {
 	stdOut := &bytes.Buffer{}
 	stdErr := &bytes.Buffer{}
